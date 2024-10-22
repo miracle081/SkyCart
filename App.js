@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { HomeScreen } from './Framework/Screen/HomeScreen';
+import { Intro } from './Framework/Screen/Intro';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <HomeScreen />
+    <View style={{ flex: 1 }}>
+      <Intro />
     </View>
   );
 }

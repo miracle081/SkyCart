@@ -14,7 +14,7 @@ export function AppBotton({ disabled, textStyle, onPress, children, style, textC
     return (
         <TouchableOpacity disabled={disabled} activeOpacity={0.7} onPress={onPress} style={[styles.btn, style]}>
             {icon}
-            <Text style={[{ color: textColor || "white", textAlign: "center", fontSize: 17, fontFamily: Theme.fonts.text700 }, textStyle]}>
+            <Text style={[{ color: textColor || "black", textAlign: "center", fontSize: 17, fontFamily: Theme.fonts.text700 }, textStyle]}>
                 {children}
             </Text>
         </TouchableOpacity>
