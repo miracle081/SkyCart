@@ -1,13 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { LogBox, View } from "react-native";
-import { Pacifico_400Regular } from "@expo-google-fonts/pacifico";
 import {
   Montserrat_100Thin, Montserrat_200ExtraLight, Montserrat_300Light, Montserrat_400Regular,
   Montserrat_500Medium, Montserrat_600SemiBold, Montserrat_700Bold, Montserrat_800ExtraBold, Montserrat_900Black
 } from "@expo-google-fonts/montserrat"
 import * as SplashScreen from "expo-splash-screen";
 import * as Font from "expo-font";
-import { StackNavigator } from "./Framework/Navigation/StackNavigator";
+import { StackNavigator } from "./Framework/Navigation/Stack";
 
 LogBox.ignoreLogs(["ViewPropTypes will be removed from React Native, along with all other PropTypes. We recommend that you migrate away from PropTypes and switch to a type system like TypeScript. If you need to continue using ViewPropTypes, migrate to the 'deprecated-react-native-prop-types' package."])
 
@@ -17,7 +16,6 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
-        await Font.loadAsync({ Pacifico_400Regular });
         await Font.loadAsync({ Montserrat_100Thin });
         await Font.loadAsync({ Montserrat_200ExtraLight });
         await Font.loadAsync({ Montserrat_300Light });

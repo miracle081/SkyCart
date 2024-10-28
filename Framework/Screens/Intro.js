@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, ImageBackground } from 'react-native'
 import React from 'react'
 import { AppBotton } from '../Components/AppBotton'
 
-export function Intro() {
+export function Intro({ navigation }) {
   return (
     <ImageBackground source={require("../../assets/intro.jpg")} style={styles.bg}>
       <View style={styles.container}>
-        <AppBotton>Get Started</AppBotton>
+        <AppBotton onPress={() => navigation.navigate("SignIn")}>Get Started</AppBotton>
       </View>
     </ImageBackground>
   )
