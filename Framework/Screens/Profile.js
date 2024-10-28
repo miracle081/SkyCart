@@ -145,7 +145,7 @@ export function Profile({ navigation }) {
 
 
             {/* logout  modal  */}
-            {/* <Modal
+            <Modal
                 visible={modalVisibility}
                 animationType="slide"
                 transparent={true}
@@ -179,7 +179,7 @@ export function Profile({ navigation }) {
                         </View>
                     </View>
                 </View>
-            </Modal> */}
+            </Modal>
         </SafeAreaView>
     )
 }

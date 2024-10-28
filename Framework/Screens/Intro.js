@@ -6,7 +6,7 @@ export function Intro({ navigation }) {
   return (
     <ImageBackground source={require("../../assets/intro.jpg")} style={styles.bg}>
       <View style={styles.container}>
-        <AppBotton onPress={() => navigation.navigate("SignIn")}>Get Started</AppBotton>
+        <AppBotton onPress={() => navigation.navigate("HomeScreen")}>Get Started</AppBotton>
       </View>
     </ImageBackground>
   )
