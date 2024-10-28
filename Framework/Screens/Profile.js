@@ -150,7 +150,7 @@ export function Profile({ navigation }) {
                 animationType="slide"
                 transparent={true}
             >
-                <View style={{ flex: 1, backgroundColor: "rgba(0,0,0,0.8)" }}>
+                <View style={{ flex: 1, backgroundColor: "#000000cc" }}>
                     <Pressable style={{ flex: 1 }} onPress={closeModal} >
                     </Pressable>
                     <View style={{ height: 200, backgroundColor: Theme.colors.light.bg, borderTopRightRadius: 20, borderTopLeftRadius: 20 }}>
