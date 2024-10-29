@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile } from './Profile';
 import { Ionicons } from '@expo/vector-icons';
+import { AppContext } from '../Components/globalVariables';
 
 function Home() {
+  const { } = useContext(AppContext)
   return (
     <View>
       <Text>HomeScreen</Text>
