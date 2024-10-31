@@ -13,7 +13,7 @@ const validation = yup.object({
   password: yup.string().min(8).max(20).required()
 })
 
-export function SignIn() {
+export function SignIn({ navigation }) {
   const { setUserUID, setPreloader } = useContext(AppContext);
 
   return (

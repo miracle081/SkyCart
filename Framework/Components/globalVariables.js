@@ -4,12 +4,14 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
     const [docID, setDocID] = useState("");
+    const [userUID, setUserUID] = useState("");
     const [preloader, setPreloader] = useState(false);
     const [userInfo, setUserInfo] = useState({ image: null, firstname: "John", lastname: "Wick", email: "john@gmail.com" });
 
     return (
         <AppContext.Provider value={{
             docID, setDocID,
+            userUID, setUserUID,
             userInfo, setUserInfo,
             preloader, setPreloader,
         }}>
