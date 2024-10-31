@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile } from './Profile';
 import { Ionicons } from '@expo/vector-icons';
 import { AppContext } from '../Components/globalVariables';
+import { Theme } from '../Components/Theme';
 
 function Home() {
   const { } = useContext(AppContext)

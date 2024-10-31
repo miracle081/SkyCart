@@ -7,6 +7,7 @@ import * as yup from "yup"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../Firebase/settings';
 import { doc, setDoc } from 'firebase/firestore';
+import { AppContext } from '../Components/globalVariables';
 
 const validation = yup.object({
   email: yup.string().email().required(),
