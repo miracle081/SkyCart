@@ -1,4 +1,4 @@
-import { SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, SafeAreaView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
 import React, { useContext, } from 'react'
 import { Theme } from '../Components/Theme';
 import { Button, } from 'react-native-paper';
@@ -7,6 +7,7 @@ import * as yup from "yup"
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../Firebase/settings';
 import { AppContext } from '../Components/globalVariables';
+import { errorMessage } from '../Components/formatErrorMessage';
 
 const validation = yup.object({
   email: yup.string().email().required(),
@@ -33,6 +34,7 @@ export function SignIn({ navigation }) {
               .catch(e => {
                 setPreloader(false)
                 console.log(e)
+                Alert.alert("Access denied!", errorMessage(e.code));
               })
           }}
           validationSchema={validation}
