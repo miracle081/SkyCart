@@ -6,8 +6,8 @@ import { Formik } from 'formik';
 import * as yup from "yup"
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '../Firebase/settings';
-import { doc, setDoc } from 'firebase/firestore';
 import { AppContext } from '../Components/globalVariables';
+import { doc, setDoc } from 'firebase/firestore';
 
 const validation = yup.object({
   email: yup.string().email().required(),
