@@ -21,7 +21,7 @@ export function SignUp({ navigation }) {
   const { setUserUID, setPreloader } = useContext(AppContext);
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white", }}>
       <View style={styles.container}>
 
         <Formik
@@ -85,21 +85,6 @@ export function SignUp({ navigation }) {
                   <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.lastname && prop.errors.lastname}</Text>
 
                 </View>
-                <View style={styles.label}>
-                  <Text style={{ fontFamily: Theme.fonts.text500 }}>E-mail</Text>
-                  <TextInput
-                    // placeholder='Enter E-mail'
-                    placeholderTextColor={"gray"}
-                    style={styles.input}
-                    onChangeText={prop.handleChange('email')}
-                    onBlur={prop.handleBlur("email")}
-                    value={prop.values.email}
-                  />
-                  <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text>
-
-
-                </View>
-
                 <View style={[styles.label, {}]}>
                   <Text style={{ fontFamily: Theme.fonts.text500 }}>Username</Text>
                   <TextInput
@@ -115,14 +100,34 @@ export function SignUp({ navigation }) {
                 </View>
 
                 <View style={styles.label}>
+                  <Text style={{ fontFamily: Theme.fonts.text500 }}>E-mail</Text>
+                  <TextInput
+                    // placeholder='Enter E-mail'
+                    placeholderTextColor={"gray"}
+                    style={styles.input}
+                    onChangeText={prop.handleChange('email')}
+                    onBlur={prop.handleBlur("email")}
+                    value={prop.values.email}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                  />
+                  <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.email && prop.errors.email}</Text>
+
+
+                </View>
+
+
+                <View style={styles.label}>
                   <Text style={{ fontFamily: Theme.fonts.text500 }}>Password</Text>
                   <TextInput
                     // placeholder='Enter Password'
                     // placeholderTextColor={"gray"}
                     style={styles.input}
+                    autoCapitalize='none'
                     onChangeText={prop.handleChange('password')}
                     onBlur={prop.handleBlur("password")}
                     value={prop.values.password}
+                    secureTextEntry={true}
                   />
                   <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.password && prop.errors.password}</Text>
 
@@ -151,7 +156,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: Theme.colors.primary,
     borderWidth: 1,
-    padding: 5,
+    padding: 10,
     paddingHorizontal: 15,
     borderRadius: 30,
     fontSize: 17,

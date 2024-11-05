@@ -23,7 +23,7 @@ export function SignIn({ navigation }) {
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={(value) => {
-            setPreloader(true)
+            setPreloader(true);
             signInWithEmailAndPassword(auth, value.email, value.password)
               .then((data) => {
                 // console.log(data.user.uid);
@@ -49,6 +49,7 @@ export function SignIn({ navigation }) {
                     placeholderTextColor={"gray"}
                     style={styles.input}
                     autoCapitalize='none'
+                    autoCorrect={false}
                     onChangeText={prop.handleChange("email")}
                     onBlur={prop.handleBlur("email")}
                     value={prop.values.email}
@@ -71,9 +72,10 @@ export function SignIn({ navigation }) {
                   />
                   <Text style={{ fontSize: 13, color: Theme.colors.red, fontFamily: Theme.fonts.text400 }}>{prop.touched.password && prop.errors.password}</Text>
                 </View>
-                <Button mode='text' style={{ fontSize: 12, alignSelf: "flex-end" }} onPress={() => { navigation.navigate("ForgottenPassword") }}>Forgot Password?</Button>
+                <Button mode='text' style={{ fontSize: 12, alignSelf: "flex-end" }} onPress={() => { navigation.navigate("ForgotPassword") }}>Forgot Password?</Button>
 
                 <Button mode='contained-tonal' style={{ marginVertical: 15 }} onPress={prop.handleSubmit} buttonColor={Theme.colors.primary + 30} > Log In</Button>
+
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
                   <Text style={{ fontSize: 15, marginVertical: 30, fontFamily: Theme.fonts.text300 }}>Im a new user</Text>
                   <Button mode='text' onPress={() => { navigation.navigate("SignUp") }}>Sign Up</Button>
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
   input: {
     borderColor: Theme.colors.primary,
     borderWidth: 1,
-    padding: 5,
+    padding: 10,
     paddingHorizontal: 15,
     borderRadius: 30,
     fontSize: 15,

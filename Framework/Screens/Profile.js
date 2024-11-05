@@ -1,13 +1,15 @@
 import { View, StyleSheet, Text, Platform, StatusBar, TouchableOpacity, Image, Modal, Pressable, ScrollView, Alert, RefreshControl, SafeAreaView } from "react-native";
 import { Theme } from "../Components/Theme";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faAngleRight, faArrowRightRotate, faPlusCircle, faUserCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { AppBotton } from "../Components/AppBotton";
 import { AntDesign, Feather, FontAwesome6, Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { formatMoney } from "../Components/FormatMoney";
+import { AppContext } from "../Components/globalVariables";
 
 export function Profile({ navigation }) {
+    const { userUID, userInfo, setPreloader } = useContext(AppContext)
     const [modalVisibility, setModalVisibility] = useState(false);
 
     const closeModal = () => {
@@ -34,8 +36,8 @@ export function Profile({ navigation }) {
                             source={require("../../assets/user.png")} />
 
                         <View style={{ marginBottom: 10, }}>
-                            <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>John Wick</Text>
-                            <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>john@gmail.com</Text>
+                            <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>
+                            <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>{userInfo.email}</Text>
                             <TouchableOpacity
                                 style={{ borderColor: Theme.colors.primary, borderWidth: 1, padding: 5, paddingHorizontal: 10, borderRadius: 100, width: 130, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                                 <FontAwesomeIcon icon={faUserCircle} color={Theme.colors.primary} />

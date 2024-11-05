@@ -9,6 +9,7 @@ import { Products } from "../Screens/Products";
 import { EditProfile } from "../Screens/EditProfile";
 import { Cart } from "../Screens/Cart";
 import { Theme } from "../Components/Theme";
+import { ForgotPassword } from "../Screens/ForgotPassword";
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export function StackNavigator() {
                 <Stack.Screen name="Products" component={Products} options={{ title: "" }} />
                 <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "Update Profile" }} />
                 <Stack.Screen name="Cart" component={Cart} options={{ title: "Email Verification" }} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: "Email Verification" }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
