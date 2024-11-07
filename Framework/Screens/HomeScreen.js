@@ -11,26 +11,29 @@ import { Ionicons } from "@expo/vector-icons";
 import { formatMoney } from "../Components/FormatMoney";
 import { AppBotton } from "../Components/AppBotton";
 import { LinearGradient } from "expo-linear-gradient";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, onSnapshot } from "firebase/firestore";
 import { AppContext } from "../Components/globalVariables";
 import { db } from "../Firebase/settings";
+import { PostProduct } from "./PostProduct";
 
-const products = [
-    {
-        name: "Realistic virtual reality headset",
-        image: "https://img.freepik.com/free-vector/realistic-virtual-reality-headset_52683-52870.jpg?t=st=1730276062~exp=1730279662~hmac=8636a638b9a928ed3f2935c65a8b0464d18bebe5cc32542324f93b212df9fec5&w=996",
-        price: 13200
-    },
-    {
-        name: "A Globe",
-        image: "https://img.freepik.com/premium-photo/globe-with-globe-it-sits-table_1078211-582808.jpg?w=996",
-        price: 54000
-    }
-];
+// const products = [
+//     {
+//         name: "Realistic virtual reality headset",
+//         image: "https://img.freepik.com/free-vector/realistic-virtual-reality-headset_52683-52870.jpg?t=st=1730276062~exp=1730279662~hmac=8636a638b9a928ed3f2935c65a8b0464d18bebe5cc32542324f93b212df9fec5&w=996",
+//         price: 13200
+//     },
+//     {
+//         name: "A Globe",
+//         image: "https://img.freepik.com/premium-photo/globe-with-globe-it-sits-table_1078211-582808.jpg?w=996",
+//         price: 54000
+//     }
+// ];
+
 
 function Home({ navigation }) {
     const { width, height } = Dimensions.get("screen")
     const { userUID, userInfo, setPreloader, setUserInfo } = useContext(AppContext)
+    const [products, setProducts] = useState([])
 
     // miracleobafemi09@gmail.com
 
@@ -48,8 +51,32 @@ function Home({ navigation }) {
         // });
     }
 
+    function getAllProducts() {
+        setPreloader(true);
+        getDocs(collection(db, "products"))
+            .then((all) => {
+                let col = []
+                all.forEach((item) => {
+                    // item.data();
+                    // setProducts((pre) => [...pre, item.data()])
+                    // setProducts([...products, item.data()])
+                    col.push(item.data())
+                })
+                console.log(JSON.stringify(col, null, 2));
+
+                setProducts(col)
+                setPreloader(false);
+            })
+            .catch(e => { setPreloader(false); console.log(e) })
+        // onSnapshot(doc(db, "users", userUID), (snapShot) => {
+        //     setPreloader(false);
+        //     snapShot.exists() ? setUserInfo(snapShot.data()) : null;
+        // });
+    }
+
     useEffect(() => {
         getUserInfo();
+        getAllProducts();
     }, []);
 
 
@@ -58,7 +85,7 @@ function Home({ navigation }) {
             <ImageBackground source={require("../../assets/landing.jpg")} style={{ height: height / 2, width: "100%" }} >
                 <LinearGradient
                     start={{ x: 0, y: 1.5 }} end={{ x: 1.5, y: 0 }}
-                    colors={["#000000", "#0000003e"]} style={{
+                    colors={["#2c07d3", "#c500003e"]} style={{
                         flex: 1,
                         padding: 20,
                         justifyContent: "space-between",
@@ -81,9 +108,9 @@ function Home({ navigation }) {
                         <View key={i} style={{ backgroundColor: "white", borderRadius: 10, width: (width / 2) - 20 }}>
                             <Image source={{ uri: item.image }} style={{ width: "100%", height: 150, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} />
                             <View style={{ padding: 10, }}>
-                                <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.text2 }}>{item.name}</Text>
+                                <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.text2 }}>{item.title}</Text>
                                 <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10 }}>₦{formatMoney(item.price)}</Text>
-                                <AppBotton>Add to Cart</AppBotton>
+                                <AppBotton>Buy Now</AppBotton>
                             </View>
                         </View>
                     )}
@@ -106,17 +133,9 @@ export function HomeScreen() {
                         size = focused ? 35 : 23
                         iconName = focused ? 'home' : 'home-outline';
                     }
-                    if (route.name === 'Assets') {
+                    else if (route.name === 'PostProduct') {
                         size = focused ? 35 : 23
-                        iconName = focused ? 'diamond' : 'diamond-outline';
-                    }
-                    if (route.name === 'PeerToPeer') {
-                        size = focused ? 35 : 23
-                        iconName = focused ? 'swap-horizontal' : 'swap-horizontal-outline';
-                    }
-                    if (route.name === 'MyShareUnit') {
-                        size = focused ? 35 : 23
-                        iconName = focused ? 'bar-chart' : 'bar-chart-outline';
+                        iconName = focused ? 'bag-add' : 'bag-add-outline';
                     }
                     else if (route.name === 'Profile') {
                         size = focused ? 35 : 23
@@ -131,6 +150,7 @@ export function HomeScreen() {
             })}
         >
             <Tab.Screen name="Home" component={Home} />
+            <Tab.Screen name="PostProduct" component={PostProduct} options={{ title: "Post Ads" }} />
             <Tab.Screen name="Profile" component={Profile} options={{ title: "Account" }} />
         </Tab.Navigator>
     );

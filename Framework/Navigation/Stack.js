@@ -19,7 +19,7 @@ export function StackNavigator() {
     return (
         <NavigationContainer>
             {/* <ExpoStatusBar animated style={"dark"} backgroundColor={Theme.colors.bg} /> */}
-            <Stack.Navigator initialRouteName="Intro" screenOptions={{ headerShown: true, headerTintColor: Theme.colors.light.text1, }}>
+            <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: true, headerTintColor: Theme.colors.light.text1, }}>
                 <Stack.Screen name="Intro" component={Intro} options={{ headerShown: false }} />
                 <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: true, title: "" }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ title: "" }} />

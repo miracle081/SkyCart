@@ -13,26 +13,6 @@ export function Cart({ navigation }) {
     const { userInfo, setPreloader, userUID } = useContext(AppContext)
     const [cart, setCart] = useState([]);
     const [fetchChanges, setfetchChanges] = useState(6687);
-    const [cartItems, setCartItems] = useState([
-        {
-            id: 1,
-            name: 'Florida T-Shirt',
-            price: 620,
-            image: 'https://img.freepik.com/free-photo/creased-t-shirt_23-2147704086.jpg?t=st=1723814609~exp=1723818209~hmac=546f903e17aa2f5f483a5a0237f36d6b971ca45844be3f467cfee3fa795611ed&w=900',
-        },
-        {
-            id: 2,
-            name: 'Nike Airforce',
-            price: 1200,
-            image: 'https://img.freepik.com/free-photo/pair-trainers_144627-3799.jpg?t=st=1723813876~exp=1723817476~hmac=efa45ec722f6c3338abb97838470410f7e010f6adf76c57c5dff78b2277c62c0&w=900',
-        },
-        {
-            id: 3,
-            name: 'Hoop Earrings',
-            price: 80,
-            image: 'https://img.freepik.com/premium-photo/fashion-women-s-earrings-gold-women-s-jewelery-gift_179493-477.jpg?w=740',
-        },
-    ]);
     const [modalVisibility, setModalVisibility] = useState(false);
     const [amount, setAmount] = useState(0);
     const [seletedItem, setseletedItem] = useState({});
