@@ -39,16 +39,17 @@ function Home({ navigation }) {
 
     function getUserInfo() {
         setPreloader(true);
-        getDoc(doc(db, "users", userUID))
-            .then((user) => {
-                setUserInfo(user.data());
-                setPreloader(false);
-            })
-            .catch(e => { setPreloader(false); console.log(e) })
-        // onSnapshot(doc(db, "users", userUID), (snapShot) => {
-        //     setPreloader(false);
-        //     snapShot.exists() ? setUserInfo(snapShot.data()) : null;
-        // });
+        // getDoc(doc(db, "users", userUID))
+        //     .then((user) => {
+        //         setUserInfo(user.data());
+        //         setPreloader(false);
+        //     })
+        //     .catch(e => { setPreloader(false); console.log(e) });
+
+        onSnapshot(doc(db, "users", userUID), (snapShot) => {
+            setPreloader(false);
+            snapShot.exists() ? setUserInfo(snapShot.data()) : null;
+        });
     }
 
     function getAllProducts() {
@@ -62,7 +63,7 @@ function Home({ navigation }) {
                     // setProducts([...products, item.data()])
                     col.push(item.data())
                 })
-                console.log(JSON.stringify(col, null, 2));
+                // console.log(JSON.stringify(col, null, 2));
 
                 setProducts(col)
                 setPreloader(false);

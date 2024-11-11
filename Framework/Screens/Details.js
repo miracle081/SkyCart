@@ -6,7 +6,7 @@ import { AppBotton } from "../Components/AppBotton";
 import { Theme } from "../Components/Theme";
 import { LinearGradient } from 'expo-linear-gradient';
 import GradientText from '../Components/GradientText';
-import { AppContext } from "../Components/GlobalVariables";
+import { AppContext } from "../Components/globalVariables";
 import { formatMoney } from "../Components/FormatMoney";
 import { updateDoc, doc as dbDoc } from "firebase/firestore";
 import { db } from "../Firebase/settings";

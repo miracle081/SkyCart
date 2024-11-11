@@ -12,7 +12,7 @@ import { ToastApp } from '../Components/Toast'
 
 
 const validationSchema = yup.object({
-    amount: yup.number().required().min(200).max(100000),
+    amount: yup.number().required().min(200, "Amount must be greater than or equal to ₦200.00").max(100000),
 })
 
 export function FundAccount({ navigation }) {

@@ -38,7 +38,7 @@ export function Profile({ navigation }) {
                         <View style={{ marginBottom: 10, }}>
                             <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>
                             <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.light.text2 }}>{userInfo.email}</Text>
-                            <TouchableOpacity
+                            <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}
                                 style={{ borderColor: Theme.colors.primary, borderWidth: 1, padding: 5, paddingHorizontal: 10, borderRadius: 100, width: 130, height: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                                 <FontAwesomeIcon icon={faUserCircle} color={Theme.colors.primary} />
                                 <Text style={{ fontSize: 13, alignItems: 'center', fontWeight: 'bold', marginLeft: 5, color: Theme.colors.primary }}>Edit Profile</Text>
@@ -47,29 +47,19 @@ export function Profile({ navigation }) {
                     </View>
                     <View style={{ marginTop: 20, borderColor: Theme.colors.light.line, borderWidth: 1, borderRadius: 10, padding: 10 }}>
                         <View style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center" }}>
-                            <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text500, }}>Wallet Balance</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", gap: 3 }}>
-                                <FontAwesomeIcon icon={faArrowRightRotate} color={Theme.colors.primary} size={11} style={{ marginTop: 3 }} />
-                                <Text style={{ fontSize: 14, fontFamily: Theme.fonts.text400, color: Theme.colors.primary, }}>Transaction History</Text>
-                            </TouchableOpacity>
-                        </View>
-                        <Text style={{ fontSize: 13, fontFamily: Theme.fonts.text700, }}>₦<Text style={{ fontSize: 30 }}>{formatMoney(9380000)}</Text></Text>
-                        <Text style={{ fontSize: 13, color: Theme.colors.primary, fontFamily: Theme.fonts.text400 }}>Asset Balance: ₦<Text style={{ fontSize: 15, fontFamily: Theme.fonts.text700, }}>{formatMoney(830000)}</Text></Text>
+                            <View style={{}}>
+                                <Text style={{ fontSize: 15, fontFamily: Theme.fonts.text500, }}>Wallet Balance</Text>
 
-                        <View style={{ marginTop: 25, flexDirection: "row", justifyContent: "space-around" }}>
-                            <TouchableOpacity style={{ alignItems: "center" }}>
+                                <Text style={{ fontSize: 13, fontFamily: Theme.fonts.text700, }}>₦<Text style={{ fontSize: 30 }}>{formatMoney(userInfo.balance)}</Text></Text>
+                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate("FundAccount")} style={{ alignItems: "center" }}>
                                 <View style={{ backgroundColor: Theme.colors.primary + 20, borderRadius: 10, padding: 5 }}>
                                     <Ionicons name="arrow-down" size={20} color={Theme.colors.primary} />
                                 </View>
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 14, color: Theme.colors.light.text1 }}>Deposit</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ alignItems: "center" }}>
-                                <View style={{ backgroundColor: Theme.colors.primary + 20, borderRadius: 10, padding: 5 }}>
-                                    <Feather name="arrow-up-right" size={20} color={Theme.colors.primary} />
-                                </View>
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 14, color: Theme.colors.light.text1 }}>Withdraw</Text>
+                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 14, color: Theme.colors.light.text1 }}>Add Funds</Text>
                             </TouchableOpacity>
                         </View>
+
                     </View>
                     <View style={{ flex: 1, marginTop: 10, paddingTop: 20, }}>
 

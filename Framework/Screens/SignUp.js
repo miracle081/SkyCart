@@ -37,6 +37,7 @@ export function SignUp({ navigation }) {
                 email: value.email,
                 username: value.username,
                 userUID: uid,
+                balance: 0,
                 image: null,
                 phone: "",
                 role: "user",

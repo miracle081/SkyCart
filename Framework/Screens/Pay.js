@@ -22,7 +22,7 @@ export function Pay({ navigation, route }) {
                 onSuccess={() => {
                     setPreloader(true);
                     updateDoc(doc(db, "users", userUID), {
-                        wallet: amount + Number(userInfo.wallet)
+                        balance: amount + Number(userInfo.balance)
                     }).then(() => {
                         setPreloader(false);
                         Alert.alert(
