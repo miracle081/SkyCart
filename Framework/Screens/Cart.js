@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, FlatList, StatusBar, Pressable, Modal, Alert } from 'react-native';
 import { formatMoney } from '../Components/FormatMoney';
 import { AppContext } from '../Components/globalVariables';
-import { doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
 import { db } from '../Firebase/settings';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -12,7 +12,7 @@ import { Theme } from '../Components/Theme';
 export function Cart({ navigation }) {
     const { userInfo, setPreloader, userUID } = useContext(AppContext)
     const [cart, setCart] = useState([]);
-    const [fetchChanges, setfetchChanges] = useState(6687);
+    // const [fetchChanges, setfetchChanges] = useState(6687);
     const [modalVisibility, setModalVisibility] = useState(false);
     const [amount, setAmount] = useState(0);
     const [seletedItem, setseletedItem] = useState({});
@@ -28,12 +28,34 @@ export function Cart({ navigation }) {
 
     function getCartItem() {
         userInfo.cart.map((item) => {
+            setPreloader(true);
             getDoc(doc(db, "products", item))
                 .then(response => {
-                    setCart(prev => [...prev, response.data()])
-                    setfetchChanges(Math.random())
+                    setCart(prev => [...prev, { ...response.data(), docID: response.id() }])
+                    setPreloader(false);
+                    // console.log(response.data());
                 })
                 .catch(e => console.log(e))
+        })
+    }
+    function placeOrder() {
+
+        cart.map((item) => {
+            setPreloader(true);
+            addDoc(collection(db, "products"), {
+                ...item,
+                quantity: 1,
+                clientID: userUID,
+                orderedAt: Date.now()
+            })
+                .then(response => {
+                    setPreloader(false);
+                    setCart(cart.filter(p => p.docID != item.docID));
+                })
+                .catch(e => {
+                    console.log(e)
+                    setPreloader(false);
+                })
         })
     }
 
@@ -53,6 +75,7 @@ export function Cart({ navigation }) {
     }
 
     useEffect(() => {
+        setPreloader(true)
         getCartItem();
         // console.log(cart);
     }, [])
@@ -67,9 +90,6 @@ export function Cart({ navigation }) {
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
             <View style={styles.header}>
-                <TouchableOpacity>
-                    <Text style={styles.backArrow}>←</Text>
-                </TouchableOpacity>
                 <Text style={styles.headerTitle}>Shopping Cart</Text>
                 <TouchableOpacity>
                     <Text style={styles.cartIcon}>🛍️</Text>
@@ -85,12 +105,12 @@ export function Cart({ navigation }) {
                 renderItem={({ item }) => (
                     <View style={styles.cartItem}>
                         <Image source={{ uri: item.image }} style={styles.itemImage} />
-                        <Text style={styles.itemName}>{item.title}</Text>
                         <View>
-                            <Text style={styles.itemPrice}>${formatMoney(item.price)}</Text>
-                            <AppBotton
+                            <Text style={styles.itemName}>{item.title}</Text>
+                            <Text style={styles.itemPrice}>₦{formatMoney(item.price)}</Text>
+                            {/* <AppBotton
                                 onPress={() => { setseletedItem(item); setAmount(Number(item.price)); getVendor(item.userId) }}
-                            >Checkout</AppBotton>
+                            >Checkout</AppBotton> */}
                         </View>
                     </View>
 
@@ -102,19 +122,19 @@ export function Cart({ navigation }) {
             <View style={styles.summaryContainer}>
                 <View style={styles.summaryRow}>
                     <Text style={styles.summaryText}>Subtotal</Text>
-                    <Text style={styles.summaryText}>${subtotal}</Text>
+                    <Text style={styles.summaryText}>₦{subtotal}</Text>
                 </View>
                 <View style={styles.summaryRow}>
                     <Text style={styles.summaryText}>Shipping</Text>
-                    <Text style={styles.summaryText}>${shipping}</Text>
+                    <Text style={styles.summaryText}>₦{shipping}</Text>
                 </View>
                 <View style={styles.summaryRow}>
                     <Text style={styles.totalText}>Total</Text>
-                    <Text style={styles.totalText}>${total}</Text>
+                    <Text style={styles.totalText}>₦{total}</Text>
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.checkoutButton}>
+            <TouchableOpacity onPress={placeOrder} style={styles.checkoutButton}>
                 <Text style={styles.checkoutButtonText}>Checkout</Text>
             </TouchableOpacity>
 
@@ -223,7 +243,8 @@ const styles = StyleSheet.create({
     },
     cartItem: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
+        gap: 10,
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: 'purple',

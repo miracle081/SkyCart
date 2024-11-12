@@ -3,6 +3,7 @@ import { createContext, useState } from "react";
 const AppContext = createContext();
 
 function AppProvider({ children }) {
+    const [doc, setDoc] = useState("");
     const [docID, setDocID] = useState("");
     const [userUID, setUserUID] = useState("yH9WlsmV87PSyv9CwyyhzVZmXJZ2");
     const [preloader, setPreloader] = useState(false);
@@ -10,6 +11,7 @@ function AppProvider({ children }) {
 
     return (
         <AppContext.Provider value={{
+            doc, setDoc,
             docID, setDocID,
             userUID, setUserUID,
             userInfo, setUserInfo,

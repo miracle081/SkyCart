@@ -38,6 +38,7 @@ export function SignUp({ navigation }) {
                 username: value.username,
                 userUID: uid,
                 balance: 0,
+                cart: [],
                 image: null,
                 phone: "",
                 role: "user",

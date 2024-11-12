@@ -5,7 +5,6 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { AppBotton } from "../Components/AppBotton";
 import { Theme } from "../Components/Theme";
 import { LinearGradient } from 'expo-linear-gradient';
-import GradientText from '../Components/GradientText';
 import { AppContext } from "../Components/globalVariables";
 import { formatMoney } from "../Components/FormatMoney";
 import { updateDoc, doc as dbDoc } from "firebase/firestore";
@@ -14,10 +13,6 @@ import { errorMessage } from "../Components/formatErrorMessage";
 
 export function Details({ navigation }) {
     const { userInfo, setPreloader, userUID, doc } = useContext(AppContext)
-    const [Price, setPrice] = useState('#10,000');
-    const [size, setSize] = useState('10');
-    const [color, setColor] = useState('Black');
-
 
     const handleAddToCart = () => {
         setPreloader(true);
@@ -25,7 +20,7 @@ export function Details({ navigation }) {
             cart: [...userInfo.cart, doc.docID]
         }).then(() => {
             setPreloader(false);
-            alert("Cart Product", `${doc.title} has been added to your cart!`);
+            Alert.alert("Cart Product", `${doc.title} has been added to your cart!`);
         }).catch((e) => {
             setPreloader(false);
             Alert.alert(
@@ -42,9 +37,9 @@ export function Details({ navigation }) {
 
                 <View style={{ padding: 15, flex: 1 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', flex: 1, gap: 15 }}>
-                        <GradientText colors={['#800080', '#4B0082']} style={{ fontSize: 30, flex: 1 }}>
-                            <Text style={{ color: 'white', fontFamily: Theme.fonts.text500 }}> {doc.title}</Text>
-                        </GradientText>
+                        <View style={{ flex: 1, }}>
+                            <Text style={{ fontSize: 20, color: '#514f4f', fontFamily: Theme.fonts.text600 }}>{doc.title}</Text>
+                        </View>
                         <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
                             <FontAwesomeIcon icon={faCartShopping} size={30} color="purple" />
                         </TouchableOpacity>

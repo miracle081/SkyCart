@@ -12,6 +12,7 @@ import { Theme } from "../Components/Theme";
 import { ForgotPassword } from "../Screens/ForgotPassword";
 import { FundAccount } from "../Screens/FundAccount";
 import { Pay } from "../Screens/Pay";
+import { Details } from "../Screens/Details";
 
 
 const Stack = createNativeStackNavigator();
@@ -29,10 +30,11 @@ export function StackNavigator() {
                 <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
                 <Stack.Screen name="Products" component={Products} options={{ title: "" }} />
                 <Stack.Screen name="EditProfile" component={EditProfile} options={{ title: "Update Profile" }} />
-                <Stack.Screen name="Cart" component={Cart} options={{ title: "Email Verification" }} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: "Email Verification" }} />
+                <Stack.Screen name="Cart" component={Cart} options={{ title: "" }} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: "" }} />
                 <Stack.Screen name="FundAccount" component={FundAccount} options={{ title: "Fund Account" }} />
-                <Stack.Screen name="Pay" component={Pay} options={{ title: "Fund Account" }} />
+                <Stack.Screen name="Pay" component={Pay} options={{ title: "" }} />
+                <Stack.Screen name="Details" component={Details} options={{ title: "" }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

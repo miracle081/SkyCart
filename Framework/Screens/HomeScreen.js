@@ -15,6 +15,7 @@ import { collection, doc, getDoc, getDocs, onSnapshot } from "firebase/firestore
 import { AppContext } from "../Components/globalVariables";
 import { db } from "../Firebase/settings";
 import { PostProduct } from "./PostProduct";
+import { Cart } from "./Cart";
 
 // const products = [
 //     {
@@ -32,7 +33,7 @@ import { PostProduct } from "./PostProduct";
 
 function Home({ navigation }) {
     const { width, height } = Dimensions.get("screen")
-    const { userUID, userInfo, setPreloader, setUserInfo } = useContext(AppContext)
+    const { userUID, setDoc, setPreloader, setUserInfo } = useContext(AppContext)
     const [products, setProducts] = useState([])
 
     // miracleobafemi09@gmail.com
@@ -61,7 +62,7 @@ function Home({ navigation }) {
                     // item.data();
                     // setProducts((pre) => [...pre, item.data()])
                     // setProducts([...products, item.data()])
-                    col.push(item.data())
+                    col.push({ ...item.data(), docID: item.id })
                 })
                 // console.log(JSON.stringify(col, null, 2));
 
@@ -73,6 +74,7 @@ function Home({ navigation }) {
         //     setPreloader(false);
         //     snapShot.exists() ? setUserInfo(snapShot.data()) : null;
         // });
+
     }
 
     useEffect(() => {
@@ -83,40 +85,42 @@ function Home({ navigation }) {
 
     return (
         <View style={{ flex: 1 }}>
-            <ImageBackground source={require("../../assets/landing.jpg")} style={{ height: height / 2, width: "100%" }} >
-                <LinearGradient
-                    start={{ x: 0, y: 1.5 }} end={{ x: 1.5, y: 0 }}
-                    colors={["#2c07d3", "#c500003e"]} style={{
-                        flex: 1,
-                        padding: 20,
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <View style={{ flex: 1, justifyContent: "flex-end" }}>
-                        <Text style={[styles.header, { color: "white" }]}>Check products</Text>
-                        <AppBotton style={{ alignSelf: "flex-start", paddingHorizontal: 30, marginTop: 10 }}>Products</AppBotton>
-                    </View >
-                </LinearGradient>
-            </ImageBackground>
-            <View style={styles.constainer}>
-                {/*  */}
-                <View style={{ marginVertical: 20 }}>
-                    <Text style={styles.text}>Recent product</Text>
-                </View>
+            <ScrollView>
+                <ImageBackground source={require("../../assets/landing.jpg")} style={{ height: height / 2, width: "100%" }} >
+                    <LinearGradient
+                        start={{ x: 0, y: 1.5 }} end={{ x: 1.5, y: 0 }}
+                        colors={["#2c07d3", "#c500003e"]} style={{
+                            flex: 1,
+                            padding: 20,
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                            <Text style={[styles.header, { color: "white" }]}>Check products</Text>
+                            <AppBotton style={{ alignSelf: "flex-start", paddingHorizontal: 30, marginTop: 10 }}>Products</AppBotton>
+                        </View >
+                    </LinearGradient>
+                </ImageBackground>
+                <View style={styles.constainer}>
+                    {/*  */}
+                    <View style={{ marginVertical: 20 }}>
+                        <Text style={styles.text}>Recent product</Text>
+                    </View>
 
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                    {products.map((item, i) =>
-                        <View key={i} style={{ backgroundColor: "white", borderRadius: 10, width: (width / 2) - 20 }}>
-                            <Image source={{ uri: item.image }} style={{ width: "100%", height: 150, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} />
-                            <View style={{ padding: 10, }}>
-                                <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.text2 }}>{item.title}</Text>
-                                <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10 }}>₦{formatMoney(item.price)}</Text>
-                                <AppBotton>Buy Now</AppBotton>
+                    <View style={{ flexWrap: "wrap", flexDirection: "row", justifyContent: "space-between" }}>
+                        {products.map((item, i) =>
+                            <View key={i} style={{ backgroundColor: "white", borderRadius: 10, width: (width / 2) - 20, marginBottom: 10 }}>
+                                <Image source={{ uri: item.image }} style={{ width: "100%", height: 150, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} />
+                                <View style={{ padding: 10, }}>
+                                    <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.text2 }}>{item.title}</Text>
+                                    <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10 }}>₦{formatMoney(item.price)}</Text>
+                                    <AppBotton onPress={() => { setDoc(item); navigation.navigate("Details"); }}>Buy Now</AppBotton>
+                                </View>
                             </View>
-                        </View>
-                    )}
+                        )}
+                    </View>
                 </View>
-            </View>
+            </ScrollView>
         </View>
     )
 }
@@ -138,6 +142,10 @@ export function HomeScreen() {
                         size = focused ? 35 : 23
                         iconName = focused ? 'bag-add' : 'bag-add-outline';
                     }
+                    else if (route.name === 'Cart') {
+                        size = focused ? 35 : 23
+                        iconName = focused ? 'cart' : 'cart-outline';
+                    }
                     else if (route.name === 'Profile') {
                         size = focused ? 35 : 23
                         iconName = focused ? 'person' : 'person-outline';
@@ -152,6 +160,7 @@ export function HomeScreen() {
         >
             <Tab.Screen name="Home" component={Home} />
             <Tab.Screen name="PostProduct" component={PostProduct} options={{ title: "Post Ads" }} />
+            <Tab.Screen name="Cart" component={Cart} />
             <Tab.Screen name="Profile" component={Profile} options={{ title: "Account" }} />
         </Tab.Navigator>
     );
