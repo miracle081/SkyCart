@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Image, TouchableOpacity, FlatList, StatusBar, Pressable, Modal, Alert } from 'react-native';
 import { formatMoney } from '../Components/FormatMoney';
 import { AppContext } from '../Components/globalVariables';
-import { addDoc, collection, doc, getDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../Firebase/settings';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -31,7 +31,7 @@ export function Cart({ navigation }) {
             setPreloader(true);
             getDoc(doc(db, "products", item))
                 .then(response => {
-                    setCart(prev => [...prev, { ...response.data(), docID: response.id() }])
+                    setCart(prev => [...prev, { ...response.data(), docID: response.id }])
                     setPreloader(false);
                     // console.log(response.data());
                 })
@@ -39,10 +39,9 @@ export function Cart({ navigation }) {
         })
     }
     function placeOrder() {
-
         cart.map((item) => {
             setPreloader(true);
-            addDoc(collection(db, "products"), {
+            addDoc(collection(db, "order"), {
                 ...item,
                 quantity: 1,
                 clientID: userUID,
@@ -50,7 +49,11 @@ export function Cart({ navigation }) {
             })
                 .then(response => {
                     setPreloader(false);
-                    setCart(cart.filter(p => p.docID != item.docID));
+                    const newCart = cart.filter(p => p.docID != item.docID)
+                    setCart(newCart);
+                    updateDoc(doc(db, "users", userUID), {
+                        cart: userInfo.cart.filter(p => p != item.docID)
+                    })
                 })
                 .catch(e => {
                     console.log(e)
