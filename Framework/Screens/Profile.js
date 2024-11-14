@@ -63,10 +63,10 @@ export function Profile({ navigation }) {
                     </View>
                     <View style={{ flex: 1, marginTop: 10, paddingTop: 20, }}>
 
-                        <TouchableOpacity style={styles.ProfileBtn}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Orders")} style={styles.ProfileBtn}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <Ionicons name="heart-outline" size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
-                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>My Listing</Text>
+                                <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>My Orders</Text>
                             </View>
                             <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
                         </TouchableOpacity>
@@ -103,7 +103,7 @@ export function Profile({ navigation }) {
                             <FontAwesomeIcon icon={faAngleRight} size={20} color={Theme.colors.light.text2} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.ProfileBtn}>
+                        <TouchableOpacity onPress={() => navigation.navigate("Web", { uri: "https://www.earlycode.net/privacy-policy" })} style={styles.ProfileBtn}>
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <AntDesign name="Safety" size={24} style={{ paddingRight: 10, color: Theme.colors.light.text2 }} />
                                 <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16 }}>Privacy Policy</Text>

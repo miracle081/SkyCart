@@ -13,6 +13,8 @@ import { ForgotPassword } from "../Screens/ForgotPassword";
 import { FundAccount } from "../Screens/FundAccount";
 import { Pay } from "../Screens/Pay";
 import { Details } from "../Screens/Details";
+import { Web } from "../Screens/Web";
+import { Orders } from "../Screens/Orders";
 
 
 const Stack = createNativeStackNavigator();
@@ -35,6 +37,8 @@ export function StackNavigator() {
                 <Stack.Screen name="FundAccount" component={FundAccount} options={{ title: "Fund Account" }} />
                 <Stack.Screen name="Pay" component={Pay} options={{ title: "" }} />
                 <Stack.Screen name="Details" component={Details} options={{ title: "" }} />
+                <Stack.Screen name="Web" component={Web} options={{ title: "" }} />
+                <Stack.Screen name="Orders" component={Orders} options={{ title: "Orders" }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

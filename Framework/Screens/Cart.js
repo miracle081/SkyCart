@@ -27,6 +27,7 @@ export function Cart({ navigation }) {
     const total = subtotal + shipping;
 
     function getCartItem() {
+        // setPreloader(true)
         userInfo.cart.map((item) => {
             setPreloader(true);
             getDoc(doc(db, "products", item))
@@ -45,7 +46,8 @@ export function Cart({ navigation }) {
                 ...item,
                 quantity: 1,
                 clientID: userUID,
-                orderedAt: Date.now()
+                orderedAt: Date.now(),
+                status: "in-progress"
             })
                 .then(response => {
                     setPreloader(false);
@@ -61,24 +63,8 @@ export function Cart({ navigation }) {
                 })
         })
     }
-
-    function getVendor(id) {
-        setPreloader(true)
-        getDoc(doc(db, "users", id))
-            .then(response => {
-                setPreloader(false)
-                setVendor({ ...response.data(), userUID: id })
-                closeModal()
-            })
-            .catch(e => {
-                setPreloader(false)
-                console.log(e);
-                Alert.alert("Vendor", "Unable to get vendor's detials. Try again")
-            })
-    }
-
     useEffect(() => {
-        setPreloader(true)
+
         getCartItem();
         // console.log(cart);
     }, [])

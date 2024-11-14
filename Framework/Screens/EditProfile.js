@@ -50,10 +50,11 @@ export function EditProfile({ navigation }) {
     async function picker() {
         const result = await Imagepicker.launchImageLibraryAsync({
             mediaType: Imagepicker.MediaTypeOptions.Images,
-            allowsEditing: false,
+            allowsEditing: true,
             aspect: [4, 4],
             quality: 1,
         })
+
         if (!result.canceled) {
             const { uri } = result.assets[0];
             setImage(uri)
@@ -77,6 +78,56 @@ export function EditProfile({ navigation }) {
     }
 
 
+
+    async function uplaodToStorage() {
+        setPreloader(true)
+        try {
+            let response = await fetch(image);
+            const imageBlob = await response.blob()
+            await imgStorage().ref().child(`ProfileImages/${userUID}`).put(imageBlob);
+        } catch (e) {
+            console.log(e);
+            setPreloader(false)
+            Alert.alert(
+                "Upload Status",
+                "Failed to upload profile image. Please try again",
+                [{ text: 'OK' }]
+            )
+        }
+    }
+
+    async function fetchProfilePic() {
+        setPreloader(true)
+        const reference = ref(storage, `ProfileImages/${userUID}`);
+        await getDownloadURL(reference).then(imgURL => {
+            updateDoc(doc(db, "users", userUID), {
+                image: imgURL
+            }).then(() => {
+                Alert.alert(
+                    "Profile Image uploaded",
+                    "Your profile picture has been uploaded successfully!",
+                );
+                setPreloader(false)
+            }).catch(() => {
+                Alert.alert(
+                    "Upload Status",
+                    "Failed to update profile image. Please try again",
+                )
+                setPreloader(false);
+            })
+        }).catch((e) => {
+            console.log(e);
+            setPreloader(false);
+        })
+    }
+
+    function StartUpload() {
+        uplaodToStorage().then(() => {
+            fetchProfilePic()
+        })
+    }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.body}>
@@ -87,9 +138,9 @@ export function EditProfile({ navigation }) {
                             <Image source={require("../../assets/user.png")}
                                 style={styles.ProfileImage} />
                         </Pressable>
-                        {/* <TouchableOpacity onPress={closeModal} style={styles.BtnIcon}>
+                        <TouchableOpacity onPress={closeModal} style={styles.BtnIcon}>
                             <FontAwesomeIcon icon={faCameraRetro} color="#16171D" size={15} />
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -235,7 +286,7 @@ export function EditProfile({ navigation }) {
                         <View style={{ alignItems: "center", padding: 5, justifyContent: "center" }}>
                             <Image source={{ uri: image }} style={{ width: 300, height: 300, borderRadius: 400, }} />
                         </View>
-                        <TouchableOpacity onPress={() => { previewModal(); }}
+                        <TouchableOpacity onPress={() => { previewModal(); StartUpload() }}
                             style={[styles.getStarted, { marginHorizontal: 10 }]}>
                             <Text style={{ fontFamily: Theme.fonts.text500, fontSize: 16, }}>Upload Image</Text>
                         </TouchableOpacity>

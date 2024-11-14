@@ -16,6 +16,7 @@ import { AppContext } from "../Components/globalVariables";
 import { db } from "../Firebase/settings";
 import { PostProduct } from "./PostProduct";
 import { Cart } from "./Cart";
+import { ToastApp } from "../Components/Toast";
 
 // const products = [
 //     {
@@ -97,7 +98,7 @@ function Home({ navigation }) {
                     >
                         <View style={{ flex: 1, justifyContent: "flex-end" }}>
                             <Text style={[styles.header, { color: "white" }]}>Check products</Text>
-                            <AppBotton style={{ alignSelf: "flex-start", paddingHorizontal: 30, marginTop: 10 }}>Products</AppBotton>
+                            <AppBotton onPress={() => ToastApp("No new Products for now!")} style={{ alignSelf: "flex-start", paddingHorizontal: 30, marginTop: 10 }}>Products</AppBotton>
                         </View >
                     </LinearGradient>
                 </ImageBackground>
@@ -124,6 +125,25 @@ function Home({ navigation }) {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    constainer: {
+        flex: 1,
+        padding: 15,
+        paddingTop: 0,
+    },
+    header: {
+        fontSize: 30,
+        fontFamily: Theme.fonts.text700,
+        color: Theme.colors.text1
+    },
+    text: {
+        fontSize: 16,
+        fontFamily: Theme.fonts.text400,
+        color: Theme.colors.text2
+    },
+
+});
 
 const Tab = createBottomTabNavigator();
 
@@ -165,22 +185,3 @@ export function HomeScreen() {
         </Tab.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-    constainer: {
-        flex: 1,
-        padding: 15,
-        paddingTop: 0,
-    },
-    header: {
-        fontSize: 30,
-        fontFamily: Theme.fonts.text700,
-        color: Theme.colors.text1
-    },
-    text: {
-        fontSize: 16,
-        fontFamily: Theme.fonts.text400,
-        color: Theme.colors.text2
-    },
-
-})
