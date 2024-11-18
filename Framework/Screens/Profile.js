@@ -33,7 +33,8 @@ export function Profile({ navigation }) {
                 <View style={styles.container}>
                     <View style={{ flexDirection: "row", gap: 10 }}>
                         <Image style={{ width: 70, height: 70, borderRadius: 50 }}
-                            source={require("../../assets/user.png")} />
+                            source={{ uri: userInfo.image }}
+                            defaultSource={require("../../assets/user.png")} />
 
                         <View style={{ marginBottom: 10, }}>
                             <Text style={{ fontSize: 22, fontFamily: Theme.fonts.text700 }}>{userInfo.firstname} {userInfo.lastname}</Text>

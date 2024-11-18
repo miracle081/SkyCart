@@ -79,6 +79,7 @@ function Home({ navigation }) {
     }
 
     useEffect(() => {
+
         getUserInfo();
         getAllProducts();
     }, []);

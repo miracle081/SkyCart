@@ -10,8 +10,9 @@ import * as Imagepicker from "expo-image-picker"
 import { AppBotton } from "../Components/AppBotton";
 import { AppContext } from "../Components/globalVariables";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../Firebase/settings";
+import { db, imgStorage, storage } from "../Firebase/settings";
 import { errorMessage } from "../Components/formatErrorMessage";
+import { getDownloadURL, ref } from "firebase/storage";
 
 
 export function EditProfile({ navigation }) {
@@ -50,7 +51,7 @@ export function EditProfile({ navigation }) {
     async function picker() {
         const result = await Imagepicker.launchImageLibraryAsync({
             mediaType: Imagepicker.MediaTypeOptions.Images,
-            allowsEditing: true,
+            allowsEditing: false,
             aspect: [4, 4],
             quality: 1,
         })
@@ -135,7 +136,8 @@ export function EditProfile({ navigation }) {
                 <View style={styles.header}>
                     <View style={{ position: "relative" }}>
                         <Pressable onPress={imageModal}>
-                            <Image source={require("../../assets/user.png")}
+                            <Image source={{ uri: userInfo.image }}
+                                defaultSource={require("../../assets/user.png")}
                                 style={styles.ProfileImage} />
                         </Pressable>
                         <TouchableOpacity onPress={closeModal} style={styles.BtnIcon}>

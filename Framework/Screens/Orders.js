@@ -69,7 +69,7 @@ export function Orders({ navigation }) {
                                 <View style={{ padding: 10, }}>
                                     <Text numberOfLines={1} style={{ fontSize: 15, fontFamily: Theme.fonts.text400, color: Theme.colors.text2 }}>{item.title}</Text>
                                     <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10 }}>₦{formatMoney(item.price)}</Text>
-                                    <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10, color: Theme.colors.yellow }}>{String(item.status).replace("-", " *")}</Text>
+                                    <Text style={{ fontSize: 18, fontFamily: Theme.fonts.text600, marginVertical: 10, color: Theme.colors.yellow }}>{String(item.status).replace("-", " ")}</Text>
                                 </View>
                             </View>
                         )}
