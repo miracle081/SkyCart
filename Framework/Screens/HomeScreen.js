@@ -17,6 +17,7 @@ import { db } from "../Firebase/settings";
 import { PostProduct } from "./PostProduct";
 import { Cart } from "./Cart";
 import { ToastApp } from "../Components/Toast";
+import Carousel from "react-native-reanimated-carousel";
 
 // const products = [
 //     {
@@ -33,7 +34,7 @@ import { ToastApp } from "../Components/Toast";
 
 
 function Home({ navigation }) {
-    const { width, height } = Dimensions.get("screen")
+    const { width, height } = Dimensions.get("screen");
     const { userUID, setDoc, setPreloader, setUserInfo } = useContext(AppContext)
     const [products, setProducts] = useState([])
 
@@ -84,6 +85,12 @@ function Home({ navigation }) {
         getAllProducts();
     }, []);
 
+    const carouselLinks = [
+        "https://images.pexels.com/photos/534228/pexels-photo-534228.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/3760072/pexels-photo-3760072.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "https://images.pexels.com/photos/4495803/pexels-photo-4495803.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+    ];
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -121,6 +128,22 @@ function Home({ navigation }) {
                             </View>
                         )}
                     </View>
+
+                    <View style={{ marginVertical: 10, }}>
+                        <Carousel
+                            loop
+                            width={width - 30}
+                            height={150}
+                            autoPlay={true}
+                            data={carouselLinks}
+                            style={{ borderRadius: 10 }}
+                            scrollAnimationDuration={2000}
+                            renderItem={({ index }) => (
+                                <Image style={{ width: '100%', height: 150, borderRadius: 10, }} source={{ uri: carouselLinks[index] }} />
+                            )}
+                        />
+                    </View>
+
                 </View>
             </ScrollView>
         </View>
